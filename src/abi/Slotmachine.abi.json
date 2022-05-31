@@ -1,0 +1,233 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.61.0-nightly",
+            "commitHash": "68369a041cea809a87e5bd80701da90e0e0a4799",
+            "commitDate": "2022-02-22",
+            "channel": "Nightly",
+            "short": "rustc 1.61.0-nightly (68369a041 2022-02-22)"
+        },
+        "contractCrate": {
+            "name": "slotmachine",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.30.0"
+        }
+    },
+    "name": "Slotmachine",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "bet",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "addJackpot",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "addPool",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "min_pool",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimRewards",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "claimAll",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "setupEarns",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "args",
+                    "type": "variadic<tuple<BigUint,u16>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setupJackpot",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "probability",
+                    "type": "u16"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setupRatio",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "redistribution",
+                    "type": "u16"
+                },
+                {
+                    "name": "jackpot",
+                    "type": "u16"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setupAllowedBet",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "allowed_bet",
+                    "type": "variadic<tuple<BigUint,bool>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "allowed_bet",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<BigUint>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "is_jackpot_possible",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "bet",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "min_allowed_bet",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "earnings",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Wins>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "jackpot",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "rewards",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "pool",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "Wins": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "u8"
+                },
+                {
+                    "name": "win_minimum_bet",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "probability",
+                    "type": "u16"
+                },
+                {
+                    "name": "is_jackpot",
+                    "type": "bool"
+                }
+            ]
+        }
+    }
+}
