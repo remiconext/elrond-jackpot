@@ -2148,7 +2148,7 @@ function SlotGame(){
             }
         }
         
-/*        if(soundOn){
+       if(soundOn){
             window.manifest.push({src:'assets/sounds/click.ogg', id:'soundClick'});
             window.manifest.push({src:'assets/sounds/result.ogg', id:'soundResult'});
             window.manifest.push({src:'assets/sounds/puller.ogg', id:'soundPuller'});
@@ -2160,7 +2160,7 @@ function SlotGame(){
             window.createjs.Sound.removeAllSounds();
             window.createjs.Sound.alternateExtensions = ["mp3"];
             window.loader.installPlugin(window.createjs.Sound);
-        } */
+        }
         
         
         window.loader.addEventListener("complete", handleComplete);
