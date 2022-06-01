@@ -11,7 +11,6 @@ import { getResult } from '../../apiEndpoints';
 
 import axios from 'axios';
 
-import { Link } from "react-router-dom";
 
 import {
     Address,
@@ -2158,14 +2157,14 @@ function SlotGame(){
             window.manifest.push({src:'assets/sounds/alert.ogg', id:'soundAlert'});
             
             window.createjs.Sound.removeAllSounds();
-            window.createjs.Sound.alternateExtensions = ["mp3"];
+            //window.createjs.Sound.alternateExtensions = ["mp3"];
             window.loader.installPlugin(window.createjs.Sound);
         }
         
         
         window.loader.addEventListener("complete", handleComplete);
         window.loader.addEventListener("fileload", fileComplete);
-        window.loader.on("progress", handleProgress, this);
+        window.loader.on("progress", handleProgress,this);
         window.loader.loadManifest(window.manifest);
         
     }
