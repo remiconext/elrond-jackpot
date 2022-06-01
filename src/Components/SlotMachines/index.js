@@ -11,7 +11,7 @@ import { getResult } from '../../apiEndpoints';
 
 import axios from 'axios';
 
-import soundClickFile from './assets/sounds/click.mp3';
+import soundClickFile from './assets/sounds/click.ogg';
 import soundResultFile from './assets/sounds/result.ogg';
 import soundPullerFile from './assets/sounds/puller.ogg';
 import soundsStopFile from './assets/sounds/stop.ogg';
@@ -2819,7 +2819,7 @@ function SlotGame(){
         <>
             <audio
                 controls
-                src={soundClickFile}>
+                src="assets/sounds/click.ogg">
                     Your browser does not support the
                     <code>audio</code> element.
             </audio>
