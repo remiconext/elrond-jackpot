@@ -11,7 +11,7 @@ import { getResult } from '../../apiEndpoints';
 
 import axios from 'axios';
 
-import soundClickFile from './assets/sounds/click.ogg';
+import soundClickFile from './assets/sounds/click.mp3';
 import soundResultFile from './assets/sounds/result.ogg';
 import soundPullerFile from './assets/sounds/puller.ogg';
 import soundsStopFile from './assets/sounds/stop.ogg';
