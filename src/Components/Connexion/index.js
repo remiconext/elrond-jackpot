@@ -35,7 +35,7 @@ export const PopupConnexion= (props) => {
 
       <Row>
 
-        <Col xs={12} sm={12} md={12} lg={4}>
+        <Col xs={12} sm={12} md={12} lg={6}>
             <div className='btn-light buttonPopup buttonPopup2 my-1'>
             <ExtensionLoginButton
               callbackRoute="/"
@@ -50,8 +50,9 @@ export const PopupConnexion= (props) => {
             </div>
 
         </Col>
+        {/* For technical reason, web wallet connexion not functional*/}
 
-        <Col xs={12} sm={12} md={12} lg={4}>
+{/*         <Col xs={12} sm={12} md={12} lg={4}>
             <div className='btn-light buttonPopup buttonPopup2 my-1'>
             <WebWalletLoginButton
               callbackRoute="/"
@@ -65,9 +66,9 @@ export const PopupConnexion= (props) => {
             </WebWalletLoginButton>
             </div>
 
-        </Col>
+        </Col> */}
 
-        <Col xs={12} sm={12} md={12} lg={4}>
+        <Col xs={12} sm={12} md={12} lg={6}>
                 
                 <div className='btn-light buttonPopup buttonPopup2 my-1'>
                 <WalletConnectLoginButton

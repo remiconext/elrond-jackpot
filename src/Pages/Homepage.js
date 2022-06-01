@@ -173,25 +173,16 @@ function Homepage() {
                 </a>
             </div>
             <div id="head-mobile"></div>
-            <div className="button"><i className="more-less fa fa-align-right"></i></div>
+            <div className="button"><i id="more-less-menu" className="more-less fa fa-align-right"></i></div>
             <ul>
-                <li><a href="#banner" className="active">Home</a></li>
-							<li><a href="about-us.html">About us</a></li>
-							<li><a href="games.html">Games</a></li>
-							<li><a href="tournaments.html">Tournaments</a></li>
-							<li><a href="faq.html">FAQ</a></li>
-							<li className="dropdown"><a href="" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                    <ul className="dropdown-menu maindrop_menu">
-                        <li><a href="contact-us.html">contact us</a></li>
-
-                        <li><a href="404-page.html">404 page</a></li>
-                    </ul>
-                </li>
-							
-              
-						<li className="login"><a href="#" className="btn-4 yellow-bg yellow-btn">Signup</a></li>
-						<li className="login"><a href="#" className="btn-4 yellow-bg">Login</a></li>
-					
+				<li className="list-menu-mobile"><a href="#banner">Home</a></li>
+				<li className="list-menu-mobile"><a href="#control">Membership</a></li>
+				<li className="list-menu-mobile"><a href="#start">How to play ?</a></li>
+				<li className="list-menu-mobile"><a href="#jackpots">Statistics</a></li>
+				<li className="list-menu-mobile"><a href="#faq">FAQ</a></li>
+				<li className="list-menu-mobile login_menu navbar-right nav-sign">
+					{!isLoggedIn ? <li className="login" onClick={handleConnect}>CONNECT WALLET</li> : <li className="login" onClick={handleLogout}>Logout</li>}
+				</li>
             </ul>
 
         </nav>

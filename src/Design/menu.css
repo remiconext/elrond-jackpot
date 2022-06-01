@@ -256,6 +256,10 @@ nav {
         display: none;
         background: #150035;
     }
+
+    #cssmenu ul.displayed {
+        display: block!important;
+    }
     #cssmenu ul li {
         width: 100%;
         border-top: 1px solid #3e1f70;

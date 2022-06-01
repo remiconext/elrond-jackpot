@@ -35,6 +35,15 @@ $(document).ready(function(){
         $('.full_nav .nav').toggleClass("tog-nav");
         $('.full_nav .nav').toggleClass("fa-time");
     });
+
+    $(document).on("click", "#more-less-menu", function () {
+        $('#cssmenu ul').toggleClass("displayed");
+    });
+
+
+    $(document).on("click", ".list-menu-mobile", function () {
+        $('#cssmenu ul').toggleClass("displayed");
+    });
     
 
     //animation scroll js

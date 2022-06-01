@@ -160,7 +160,7 @@ function SlotGame(){
         }   
         
 
-    },[]);
+    },[isLoggedIn]);
 
     ////////////////////////////////////////////////////////////
     // CANVAS
@@ -2357,13 +2357,13 @@ function SlotGame(){
         if(window.$.browser.mobile || isTablet){
             if(!rotateInstruction){
                 window.$(canvasHolderElement.current).show();
-                window.$(rotateHolderElement).hide();
+                window.$(rotateHolderElement.current).hide();
                 return;	
             }
             
             window.$( window ).off('orientationchange').on( "orientationchange", function( event ) {
                 window.$(canvasHolderElement.current).hide();
-                window.$(rotateHolderElement).hide();
+                window.$(rotateHolderElement.current).hide();
                 
                 setTimeout(function() {
                     checkMobileOrientation();
@@ -2414,9 +2414,9 @@ function SlotGame(){
     */
     function toggleRotate(con){
         if(con){
-            window.$(rotateHolderElement).fadeIn();
+            window.$(rotateHolderElement.current).fadeIn();
         }else{
-            window.$(rotateHolderElement).fadeOut();		
+            window.$(rotateHolderElement.current).fadeOut();		
         }
         
         resizeGameFunc();
@@ -2816,16 +2816,9 @@ function SlotGame(){
     
 
     return(
-        <>
-            <audio
-                controls
-                src="assets/click.ogg">
-                    Your browser does not support the
-                    <code>audio</code> element.
-            </audio>
-            
+        <>          
             {transactionStatus.isPending && <Loading />}
-            {showPopup && <PopupConnexion close={handleClosePopup}/>}
+            {showPopup && !isLoggedIn && <PopupConnexion close={handleClosePopup}/>}
             {/* PERCENT window.LOADER START */}
             <div id="mainLoader" ref={mainLoaderElement}><img src="assets/loader.png" /><br/><span ref={mainLoaderSpanElement}>0</span></div>
             {/* PERCENT window.LOADER END */}

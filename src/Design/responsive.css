@@ -574,7 +574,7 @@ font-size: 28px;
     }
 
     .hidden {
-        display: block;
+        display: block!important;
     }
 
     .hidden-main {
