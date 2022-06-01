@@ -2148,17 +2148,17 @@ function SlotGame(){
         }
         
        if(soundOn){
-            window.manifest.push({src:'assets/sounds/click.ogg', id:'soundClick'});
-            window.manifest.push({src:'assets/sounds/result.ogg', id:'soundResult'});
-            window.manifest.push({src:'assets/sounds/puller.ogg', id:'soundPuller'});
-            window.manifest.push({src:'assets/sounds/stop.ogg', id:'soundStop'});
-            window.manifest.push({src:'assets/sounds/spin.ogg', id:'soundSpin'});
-            window.manifest.push({src:'assets/sounds/win.ogg', id:'soundWin'});
-            window.manifest.push({src:'assets/sounds/alert.ogg', id:'soundAlert'});
+            window.manifest.push({src:'assets/sounds/click.mp3', id:'soundClick'});
+            window.manifest.push({src:'assets/sounds/result.mp3', id:'soundResult'});
+            window.manifest.push({src:'assets/sounds/puller.mp3', id:'soundPuller'});
+            window.manifest.push({src:'assets/sounds/stop.mp3', id:'soundStop'});
+            window.manifest.push({src:'assets/sounds/spin.mp3', id:'soundSpin'});
+            window.manifest.push({src:'assets/sounds/win.mp3', id:'soundWin'});
+            window.manifest.push({src:'assets/sounds/alert.mp3', id:'soundAlert'});
             
             window.createjs.Sound.removeAllSounds();
-            //window.createjs.Sound.alternateExtensions = ["mp3"];
-            //window.loader.installPlugin(window.createjs.Sound);
+            window.createjs.Sound.alternateExtensions = ["mp3"];
+            window.loader.installPlugin(window.createjs.Sound);
         }
         
         
