@@ -2158,7 +2158,7 @@ function SlotGame(){
             
             window.createjs.Sound.removeAllSounds();
             //window.createjs.Sound.alternateExtensions = ["mp3"];
-            window.loader.installPlugin(window.createjs.Sound);
+            //window.loader.installPlugin(window.createjs.Sound);
         }
         
         
