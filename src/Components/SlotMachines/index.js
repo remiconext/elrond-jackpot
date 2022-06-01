@@ -11,6 +11,13 @@ import { getResult } from '../../apiEndpoints';
 
 import axios from 'axios';
 
+import soundClickFile from './assets/sounds/click.ogg';
+import soundResultFile from './assets/sounds/result.ogg';
+import soundPullerFile from './assets/sounds/puller.ogg';
+import soundsStopFile from './assets/sounds/stop.ogg';
+import soundSpinFile from './assets/sounds/spin.ogg';
+import soundWinFile from './assets/sounds/win.ogg';
+import soundAlertFile from './assets/sounds/alert.ogg';
 
 import {
     Address,
@@ -2148,13 +2155,13 @@ function SlotGame(){
         }
         
        if(soundOn){
-            window.manifest.push({src:'assets/sounds/click.ogg', id:'soundClick',type:window.createjs.Types.SOUND});
-            window.manifest.push({src:'assets/sounds/result.ogg', id:'soundResult',type:window.createjs.Types.SOUND});
-            window.manifest.push({src:'assets/sounds/puller.ogg', id:'soundPuller',type:window.createjs.Types.SOUND});
-            window.manifest.push({src:'assets/sounds/stop.ogg', id:'soundStop',type:window.createjs.Types.SOUND});
-            window.manifest.push({src:'assets/sounds/spin.ogg', id:'soundSpin',type:window.createjs.Types.SOUND});
-            window.manifest.push({src:'assets/sounds/win.ogg', id:'soundWin',type:window.createjs.Types.SOUND});
-            window.manifest.push({src:'assets/sounds/alert.ogg', id:'soundAlert',type:window.createjs.Types.SOUND});
+            window.manifest.push({src:soundClickFile, id:'soundClick',type:window.createjs.Types.SOUND});
+            window.manifest.push({src:soundResultFile, id:'soundResult',type:window.createjs.Types.SOUND});
+            window.manifest.push({src:soundPullerFile, id:'soundPuller',type:window.createjs.Types.SOUND});
+            window.manifest.push({src:soundsStopFile, id:'soundStop',type:window.createjs.Types.SOUND});
+            window.manifest.push({src:soundSpinFile, id:'soundSpin',type:window.createjs.Types.SOUND});
+            window.manifest.push({src:soundWinFile, id:'soundWin',type:window.createjs.Types.SOUND});
+            window.manifest.push({src:soundAlertFile, id:'soundAlert',type:window.createjs.Types.SOUND});
             
             window.createjs.Sound.removeAllSounds();
             window.createjs.Sound.alternateExtensions = ["mp3"];
@@ -2810,12 +2817,6 @@ function SlotGame(){
 
     return(
         <>
-            <audio
-                controls
-                src="assets/sounds/click.ogg">
-                    Your browser does not support the
-                    <code>audio</code> element.
-            </audio>
             {transactionStatus.isPending && <Loading />}
             {showPopup && <PopupConnexion close={handleClosePopup}/>}
             {/* PERCENT window.LOADER START */}
