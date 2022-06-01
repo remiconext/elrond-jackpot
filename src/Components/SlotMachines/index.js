@@ -2810,6 +2810,12 @@ function SlotGame(){
 
     return(
         <>
+            <audio
+                controls
+                src="assets/sounds/click.ogg">
+                    Your browser does not support the
+                    <code>audio</code> element.
+            </audio>
             {transactionStatus.isPending && <Loading />}
             {showPopup && <PopupConnexion close={handleClosePopup}/>}
             {/* PERCENT window.LOADER START */}
