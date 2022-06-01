@@ -2819,7 +2819,7 @@ function SlotGame(){
         <>
             <audio
                 controls
-                src="assets/sounds/click.ogg">
+                src="assets/click.ogg">
                     Your browser does not support the
                     <code>audio</code> element.
             </audio>
