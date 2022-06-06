@@ -2300,7 +2300,7 @@ function SlotGame(){
             offset.top = 0;
             
             if(newCanvasW > windowW){
-                offset.left = -((newCanvasW) - windowW);
+                offset.left = -((newCanvasW) - windowW)-20;
             }else{
                 offset.left = windowW - (newCanvasW);
             }
@@ -2832,16 +2832,6 @@ function SlotGame(){
                 </div>
                 {/* BROWSER NOT SUPPORT END */}
                 
-                {/* ROTATE INSTRUCTION START */}
-                <div id="rotateHolder" ref={rotateHolderElement}>
-                    <div class="mobileRotate" ref={mobileRotateElement}>
-                        <div class="rotateDesc">
-                            <div class="rotateImg"><img src="assets/rotate.png" /></div>
-                            Rotate your device <br/>to landscape
-                        </div>
-                    </div>
-                </div>
-                {/* ROTATE INSTRUCTION END */}
                 
                 {/*!-- CANVAS START */}
                 <div id="canvasHolder" ref={canvasHolderElement}>
