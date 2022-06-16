@@ -12,10 +12,9 @@ import { DappProvider,DappUI } from "@elrondnetwork/dapp-core";
 function App() {
   return (
     <DappProvider
-      environment="devnet"
+      environment="testnet"
       customNetworkConfig={{ name: 'customConfig', apiTimeout: 6000 }}
     >
-      <DappUI.SignTransactionsModals />
       <Router>
         <Routes>
           <Route exact path="/" element={<Homepage/>}/>

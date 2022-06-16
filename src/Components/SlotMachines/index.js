@@ -5,7 +5,7 @@ import "./css/normalize.css";
 import PopupConnexion from "../Connexion";
 import Loading from "../Loading";
 
-import {useGetLoginInfo,refreshAccount,transactionServices,useGetNetworkConfig} from "@elrondnetwork/dapp-core";
+import {useGetLoginInfo,refreshAccount,transactionServices,useGetNetworkConfig,useGetSignedTransactions,useGetAccountProvider,useSignTransactions} from "@elrondnetwork/dapp-core";
 
 import { getResult } from '../../apiEndpoints';
 
@@ -31,11 +31,22 @@ import {
 
 import abiFile from "../../abi/Slotmachine.abi.json";
 import { ProxyNetworkProvider } from "@elrondnetwork/erdjs-network-providers";
+import { useGetNotification } from '@elrondnetwork/dapp-core';
 
 
 function SlotGame(){
+    const {providerType}  = useGetAccountProvider();
+    const {
+        callbackRoute,
+        transactions,
+        error,
+        onAbort,
+        hasTransactions
+      } = useSignTransactions();
 
+    
     let contractAddressSlotMachine=process.env.REACT_APP_SMART_CONTRACT_SLOT_MACHINE;
+    let contractAddressSlotMachineCaller=process.env.REACT_APP_SMART_CONTRACT_SLOT_MACHINE_CALLER;
 
     const { network } = useGetNetworkConfig();
 
@@ -72,8 +83,8 @@ function SlotGame(){
         const spinTransaction = {
             value: betEGLD.toString(),
             data: 'bet',
-            receiver: contractAddressSlotMachine,
-            gasLimit: 600_000_000,
+            receiver: contractAddressSlotMachineCaller,
+            gasLimit: 30_000_000,
         };
         await refreshAccount();
         const { sessionId, error } = await sendTransactions({
@@ -85,9 +96,14 @@ function SlotGame(){
             },
             redirectAfterSign: false
         });
+        //window.alert(JSON.stringify(transactions));
         if (sessionId != null){
             setSessionId(sessionId);
+            //startSpin();
         }
+        
+    
+
     }
 
     ////////////////////////////////////////////////////////////
@@ -728,11 +744,12 @@ function SlotGame(){
         
         window.buttonSpin.cursor = "pointer";
         window.buttonSpin.addEventListener("click", function(evt) {
-            gameData.resultArray = [1,1,1];
+            
             if(!isLoggedIn){
                 setShowPopup(true);
             }else{
                 playSound('soundClick');
+
                 spinSlot(formatCurrency((betAmount_arr[slotData.amount] * (slotData.lines+1))));
                 
             
@@ -750,9 +767,9 @@ function SlotGame(){
 
         });
 
-        document.getElementById("mainHolder").addEventListener("spin",function(evt){
-            gameData.resultArray = evt.detail.value;
-            
+        document.getElementById("mainHolder").addEventListener("beginSlot",function(evt){
+            //gameData.resultArray = evt.detail.value;
+            gameData.resultArray = [1,1,1];
             startSpin();
         });
         
@@ -799,6 +816,7 @@ function SlotGame(){
         
         window.buttonMaxBet.cursor = "pointer";
         window.buttonMaxBet.addEventListener("click", function(evt) {
+            
             playSound('soundClick');
             toggleBetAmount(true);
             if(!isLoggedIn){
@@ -1353,16 +1371,13 @@ function SlotGame(){
     * START SPIN - This is the function that runs to start spin
     * 
     */
-    function startSpin(){        
+    function startSpin(){ 
+
         if(slotData.spin){
             return;	
         }
         
-        var currentBet = formatCurrency((betAmount_arr[slotData.amount] * (slotData.lines+1)));
-        
-        
-
-        
+        var currentBet = formatCurrency((betAmount_arr[slotData.amount] * (slotData.lines+1)));        
         
         playSound('soundPuller');
         slotData.spin = true;
@@ -1370,11 +1385,11 @@ function SlotGame(){
         slotData.winSlotArray.length = 0;
         slotData.linesArray.length = 0;
         window.slotWinContainer.removeAllChildren();
-        
         resetHighlightWinSlots();
         window.TweenMax.to(window.linesContainer, .3, {overwrite:true, onComplete:function(){
             playSoundLoop('soundSpin');
         }});
+        
         
         playerData.amount = betAmount_arr[slotData.amount];
         playerData.bet = currentBet;
@@ -1389,7 +1404,7 @@ function SlotGame(){
 
     
         prepareSlots();
-        presetSlotsResult();
+        //presetSlotsResult();
 
         
         slotData.spinComplete = 0;
@@ -1408,7 +1423,18 @@ function SlotGame(){
 
     function continueSpin(c){
         var tweenSpeed = spinSettings.spinningSpeed + (spinSettings.increaseSpeed * c);
-        window.TweenMax.to(slotData.array[c], tweenSpeed, {y:slotData.array[c].posY-100, ease:window.Linear.easeOut, overwrite:true, onComplete:finalSpin, onCompleteParams:[c]});
+        let a = window.TweenMax.to(slotData.array[c], tweenSpeed, {y:slotData.array[c].posY-100, ease:window.Linear.easeOut, overwrite:true,repeat:-1});
+        document.getElementById("mainHolder").addEventListener("spin",function(evt){
+            gameData.resultArray = evt.detail.value;
+            a.updateTo({
+                onRepeat: function() {
+                    this.kill();
+                    prepareSlots();
+                    presetSlotsResult();
+                    finalSpin(c);
+                },
+            });
+        },{once:true});
     }
 
     function finalSpin(c){
@@ -2194,7 +2220,8 @@ function SlotGame(){
     * 
     */
     function handleProgress() {
-        window.$(mainLoaderSpanElement).html(Math.round(window.loader.progress/1*100)+'%');
+        mainLoaderSpanElement.current.innerHTML=Math.round(window.loader.progress/1*100)+'%';
+
     }
 
     /*!
@@ -2693,14 +2720,14 @@ function SlotGame(){
     * PLAY MUSIC - This is the function that runs to play and stop music
     * 
     */
-    window.$.sound = {};
+   let sound_arr = {};
     function playSoundLoop(sound){
         if(soundOn){
-            if(window.$.sound[sound]==null){
-                window.$.sound[sound] = window.createjs.Sound.play(sound);
-                window.$.sound[sound].removeAllEventListeners();
-                window.$.sound[sound].addEventListener ("complete", function() {
-                    window.$.sound[sound].play();
+            if(sound_arr[sound]==null){
+                sound_arr[sound] = window.createjs.Sound.play(sound);
+                sound_arr[sound].removeAllEventListeners();
+                sound_arr[sound].addEventListener ("complete", function() {
+                    sound_arr[sound].play();
                 });
             }
         }
@@ -2708,17 +2735,17 @@ function SlotGame(){
 
     function stopSoundLoop(sound){
         if(soundOn){
-            if(window.$.sound[sound]!=null){
-                window.$.sound[sound].stop();
-                window.$.sound[sound]=null;
+            if(sound_arr[sound]!=null){
+                sound_arr[sound].stop();
+                sound_arr[sound]=null;
             }
         }
     }
 
     function setSoundVolume(sound, vol){
         if(soundOn){
-            if(window.$.sound[sound]!=null){
-                window.$.sound[sound].volume = vol;
+            if(sound_arr[sound]!=null){
+                sound_arr[sound].volume = vol;
             }
         }
     }
@@ -2733,13 +2760,33 @@ function SlotGame(){
     }
 
     /*!
-    Blockchain interfactions
+    Blockchain interactions
     */
 
-    const triggerSplinSlotAnimation = () => {
+    const {signedTransactions} = useGetSignedTransactions();
+    useEffect(()=>{
+         if(signedTransactions[sessionId] != undefined && signedTransactions[sessionId].status === "sent"){
+            const triggerEvent = new Event("beginSlot", {
+                bubbles: true,
+                cancelable: true,
+                composed: false,
+            });
+            let mainElementHolder= document.getElementById("mainHolder");
+            mainElementHolder.dispatchEvent(triggerEvent);
+            //startSpin();
+            //window.alert(JSON.stringify(signedTransactions[sessionId]));
+        }
+    },[signedTransactions]);
+
+    const triggerSpinSlotAnimation = () => {
         axios.get(getResult(network.apiAddress,transactionStatus.transactions[0].hash))
         .then(function(response){
-            let result = Buffer.from(response.data.logs.events[0].data,"base64").toString().split("@")[2];
+            let data="";
+            response.data.results.map((result)=>{
+                if(result.callType==2){
+                    data=result.data;
+                }
+            });
             let possibleValues=[1,2,3,4];
             let values=[];
             for (let nb1 in possibleValues){
@@ -2754,23 +2801,28 @@ function SlotGame(){
             }
             let index = Math.floor(Math.random() * (values.length - 0)) + 0;
             let value=values[index];
-            switch (result){
-                case '01':
-                    value=[0,0,0];
-                    break;
-                case '02':
-                    value=[1,1,1];
-                    break;
-                case '03':
-                    value=[2,2,2];
-                    break;
-                case '04':
-                    value=[3,3,3];
-                    break;
-                case '05':
-                    value=[4,4,4];
-                    break;
+            if(data!==""){
+                let result = Buffer.from(data,"base64").toString().split("@")[2];                
+                
+                switch (result){
+                    case '01':
+                        value=[0,0,0];
+                        break;
+                    case '02':
+                        value=[1,1,1];
+                        break;
+                    case '03':
+                        value=[2,2,2];
+                        break;
+                    case '04':
+                        value=[3,3,3];
+                        break;
+                    case '05':
+                        value=[4,4,4];
+                        break;
+                }
             }
+            
             const triggerEvent = new CustomEvent("spin", {
                 detail : {"value":value},
                 bubbles: true,
@@ -2786,7 +2838,7 @@ function SlotGame(){
         let abiRegistry = AbiRegistry.create(abiFile);
         let abi = new SmartContractAbi(abiRegistry, ["Slotmachine"]);
 
-        let contract = new SmartContract({ address: new Address(contractAddressSlotMachine), abi: abi });
+        let contract = new SmartContract({ address: new Address(contractAddressSlotMachineCaller), abi: abi });
         const proxy = new ProxyNetworkProvider(network.apiAddress);
 
         const queryCurrentJackpot= new Query({
@@ -2803,21 +2855,13 @@ function SlotGame(){
 
     const transactionStatus = transactionServices.useTrackTransactionStatus({
         transactionId: sessionId ?? null,
-        onSuccess:triggerSplinSlotAnimation,
+        onSuccess:triggerSpinSlotAnimation,
     });
-
-    const queryParams = new URLSearchParams(window.location.search);
-    const signSession = queryParams.get('signSession');
-
-    if (signSession && sessionId != signSession) {
-        setSessionId(signSession);
-    }
-
     
 
     return(
         <>          
-            {transactionStatus.isPending && <Loading />}
+            {/*transactionStatus.isPending && <Loading />*/}
             {showPopup && !isLoggedIn && <PopupConnexion close={handleClosePopup}/>}
             {/* PERCENT window.LOADER START */}
             <div id="mainLoader" ref={mainLoaderElement}><img src="assets/loader.png" /><br/><span ref={mainLoaderSpanElement}>0</span></div>
