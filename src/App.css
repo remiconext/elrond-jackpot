@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Monte Carlo";
+  src: url(./assets/font/MonteCarlo-Regular.ttf);
+}
+@font-face {
+  font-family: "Nova Round";
+  src: url(./assets/font/NovaRound-Regular.ttf);
+}
 .App {
   text-align: center;
 }
@@ -34,5 +42,413 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.wheelRoom{
+  font-family: "Monte Carlo";
+  background-color: #1a1a1a;
+  min-height:100vh;
+}
+
+.wheelRoom h2{
+  color:white;
+  font-size: 96px;
+}
+
+
+.button-wheel-room{
+  width: 150px;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+  height: 30px;
+  border: solid white 2px;
+  margin: 0 20px 0 20px;
+}
+
+.button-red{
+  background-color: red;
+}
+
+.button-black{
+  background-color: black;
+}
+
+.exit {
+  position: absolute;
+  height: 30px;
+  right: 40px;
+  top: 40px;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.music {
+  position: absolute;
+  height: 30px;
+  right: 40px;
+  top: 80px;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.last-winning-numbers{
+  background-color: #FFC738;
+  border-radius: 30px;  
+  width:80%;
+  left:50%;
+  position:relative;
+  transform: translateX(-50%);
+  padding-bottom: 10px;
+}
+
+.selector{
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border: 1px solid;
+  border-radius: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.last-winning-numbers h3{
+  text-align:center;
+  font-weight: bold;
+}
+
+.last-winning-numbers div.row-winning-numbers{
+  padding-right:0;
+  padding-left:0;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.winning-numbers{
+  background-color: red;
+  border-radius: 100%;
+  text-align: center;
+  width: 25px;
+  height: 25px;
+  left:50%;
+  transform: translateX(-50%);
+  position: relative;
+  color:white;
+
+}
+.winning-numbers-red{
+  background-color: red;
+}
+.winning-numbers-black{
+  background-color: black;
+}
+.winning-numbers-green{
+  background-color: green;
+}
+
+
+.bet-img{
+  width:30px;
+  margin-left:10px;
+  margin-right:10px;
+  display: inline-block;
+  position:relative;
+  cursor: pointer;
+}
+
+.clear-all-btn{
+  width:30px;
+  height:30px;
+  margin-left:10px;
+  margin-right:10px;
+  border-radius: 100%;
+  background-color: white;
+  font-size: 10px;
+  text-align: center;
+  display: inline-block;
+  vertical-align:middle;
+  cursor: pointer;
+}
+
+.bet-selector{
+  background-color: #FFC738;
+  border-radius:30px;
+  padding: 10px 25px 10px 25px;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}
+
+.bet-amount{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 10px;
+  top: 50%;
+  font-weight: bold;
+}
+
+.bet-amount.white{
+  color:white;
+}
+
+.place-bet-btn{
+  font-weight: bold;
+  background-color: white;
+  padding: 8px 30px 8px 30px;
+  margin-top:5%;
+  border-radius: 30px;
+  left:50%;
+  position:relative;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.row-winning-numbers-mobile{
+  background-color:#FFC738;
+  display: flex;
+  justify-content: space-around;
+  border-radius:30px;
+  padding:5px;
+  margin-top: 10%;
+  margin-bottom:10%;
+}
+
+.winning-numbers-mobile{
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+}
+
+.winning-numbers-mobile > div{
+  text-align: center;
+  height: 100%;
+  color:white;
+}
+
+.mobileButton{
+  background-color: white;
+  cursor:pointer;
+}
+
+.clean-all-mobile{
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  padding: 2%;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+  box-shadow: 2px 2px 5px gray;
+}
+
+.clean-all-mobile > div{
+  text-align:center;
+  position:relative;
+  top:50%;
+  transform: translateY(-50%);
+
+}
+
+.place-bet-mobile{
+  height: 40px;
+  text-align: center;
+  border-radius: 30px;
+  width: 80%;
+  top: 50%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  box-shadow: 2px 2px 5px gray;
+}
+
+.place-bet-mobile > div{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align:center;
+}
+
+.disabled{
+  cursor:not-allowed;
+}
+
+@media (max-width:992px){
+  .wheelRoom{
+    height:100%;
+    overflow: hidden;
+  }
+  .wheelRoom > .game > .row.button-bet-board{
+    padding-top:0;
+    padding-bottom:30px;
+  }
+  .wheelRoom h2{
+    text-align:left;
+    font-size:60px;
+    margin-bottom:20px;
+  }
+  .music {
+    right: 90px;
+    top: 40px;
+  }
+  .clean-all-mobile{
+    height: 40px;
+    text-align: center;
+    border-radius: 30px;
+    width: 80%;
+    top: 50%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,-50%)  scale(1.1);
+    box-shadow: 2px 2px 5px gray;
+  }
+  
+  .clean-all-mobile > div{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align:center;
+  }
+  .place-bet-mobile {
+    transform: translate(-50%,-50%) scale(1.1);
+  }
+
+}
+
+
+/*###############Slot Machine ################*/
+.slot-dapp{
+  font-family: 'Nova Round';
+  height: 100vh;
+  background-image: url(./images/slotmachine/bg.jpg);
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  overflow: hidden;
+}
+
+.slot-bet-1{
+  transform: translateY(-4vw);
+}
+
+.slot-bet-2{
+  transform: translateY(-30vw);
+}
+
+.slot-bet-3{
+  transform: translateY(-14vw);
+}
+.game-slot{
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.bet-slot{
+  height: 22vw;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.slot-dapp img{
+  position: absolute;
+  left: 2vw;
+}
+
+.jackpot-vol{
+  background: #FFFFFF;
+  border-radius: 20px;
+  font-family: 'Nova Round';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vw;
+  animation:jackpotColorAnimation 3s linear infinite;
+}
+
+@keyframes jackpotColorAnimation {
+  0%{
+    filter: drop-shadow(0 0 0.75rem crimson);
+  }
+  20%{
+    filter: drop-shadow(0 0 0.75rem rgb(5, 233, 50));
+  }
+  40%{
+    filter: drop-shadow(0 0 0.75rem rgb(229, 43, 254));
+  }
+  60%{
+    filter: drop-shadow(0 0 0.75rem rgb(255, 212, 18));
+  }
+  80%{
+    filter: drop-shadow(0 0 0.75rem rgb(62, 209, 250));
+  }
+  100%{
+    filter: drop-shadow(0 0 0.75rem rgb(255, 143, 15));
+  }
+}
+
+.levier{
+  height: 15vw;
+  transform: translate(69.9vw,-12vw);
+  cursor: pointer;
+}
+
+.button-wheel{
+  display: flex;
+  justify-content: space-around;
+  width: 80vw;
+  color: white;
+}
+
+.yellow-btn-bet {
+  font-family: 'Nova Round';
+  cursor:pointer;
+  background: #F2CD63;
+  border: 3px solid #A65B00;
+  box-shadow: 4px 4px 0px #282727;
+  border-radius: 10px;
+  padding: 0.5vw 6vw;
+  z-index: 4;
+  height:100%;
+  text-align: center;
+}
+
+.yellow-btn-bet > div{
+  position:relative;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+.container-bet{
+  position:relative;
+}
+
+.amount-bet{
+  position: absolute;
+  transform: translate(-50%,-100%);
+  left: 50%;
+  background: #9B9595;
+  border-radius: 20px 20px 0px 0px;
+  text-align: center;
+  font-size: 1.6vw;
+  padding: 0.4vw;
+  width: 80%;
+}
+
+@keyframes spinSlot {
+  from {
+    transform: translateY(-49vw);
+  }
+
+  to {
+    transform: translateY(-5vw);
   }
 }

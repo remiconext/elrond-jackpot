@@ -19,7 +19,6 @@
     text-align: center;
     align-items: center;
     border-radius: 15px;
-    z-index: 300;
   }
   button.buttonPopup.btn:not(:disabled):not(.disabled){
     padding:0 !important;
@@ -41,7 +40,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 299;
+    z-index: 499;
     background-color: #0000009f;
   }
   
@@ -81,6 +80,7 @@
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    width:180px;
   }
   
   .btn {

@@ -1,0 +1,260 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.61.0-nightly",
+            "commitHash": "68369a041cea809a87e5bd80701da90e0e0a4799",
+            "commitDate": "2022-02-22",
+            "channel": "Nightly",
+            "short": "rustc 1.61.0-nightly (68369a041 2022-02-22)"
+        },
+        "contractCrate": {
+            "name": "wheelcontractcaller",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.33.1"
+        }
+    },
+    "name": "Wheel",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "runWheel",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "plein",
+                    "type": "List<Plein>"
+                },
+                {
+                    "name": "cheval",
+                    "type": "List<Cheval>"
+                },
+                {
+                    "name": "transversale",
+                    "type": "List<Transversale>"
+                },
+                {
+                    "name": "carre",
+                    "type": "List<Carre>"
+                },
+                {
+                    "name": "sixain",
+                    "type": "List<Sixain>"
+                },
+                {
+                    "name": "even",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "odd",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "red",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "black",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "first_half",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "second_half",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "first_dozen",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "second_dozen",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "third_dozen",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "first_column",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "second_column",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "third_column",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setCalleeContract",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "contract",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getIntervalParseWinningNumbers",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u8>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "callee_contract",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "err_storage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": true,
+    "types": {
+        "Carre": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nb_1",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_2",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_3",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_4",
+                    "type": "u8"
+                },
+                {
+                    "name": "bet",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "Cheval": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nb_1",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_2",
+                    "type": "u8"
+                },
+                {
+                    "name": "bet",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "Plein": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nb_1",
+                    "type": "u8"
+                },
+                {
+                    "name": "bet",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "Sixain": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nb_1",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_2",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_3",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_4",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_5",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_6",
+                    "type": "u8"
+                },
+                {
+                    "name": "bet",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "Transversale": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nb_1",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_2",
+                    "type": "u8"
+                },
+                {
+                    "name": "nb_3",
+                    "type": "u8"
+                },
+                {
+                    "name": "bet",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}

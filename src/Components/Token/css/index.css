@@ -1,0 +1,26 @@
+.cdChip{
+    width:30px;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    z-index: 498;
+    cursor: pointer;
+}
+
+.bet-amount-chip{
+    position:absolute;
+    left : 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.black-bet{
+    color:black;
+}
+
+.white-bet{
+    color:white;
+}

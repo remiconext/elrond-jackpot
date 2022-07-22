@@ -1,5 +1,5 @@
 import {useState,useEffect} from 'react';
-import headerLogo from "../images/header-logo.png";
+import headerLogo from "../images/logo.png";
 import headingBorderEffect from "../images/heading-border-effect.png";
 import borderEffect from "../images/border-effect.png";
 import relatedGameImage1 from "../images/related-game-image-1.jpg";
@@ -59,7 +59,7 @@ import axios from 'axios';
 
 function Homepage() {
 	const { network } = useGetNetworkConfig();
-	let contractAddressSlotMachine=process.env.REACT_APP_SMART_CONTRACT_SLOT_MACHINE;
+	let contractAddressSlotMachine=process.env.REACT_APP_SMART_CONTRACT_SLOT_MACHINE_CALLER;
 
 	const {isLoggedIn}=useGetLoginInfo();
 	const [showPopup,setShowPopup] = useState(false);
@@ -91,12 +91,50 @@ function Homepage() {
 			let j=0;
 			response.data.map(data => {
 				if(data.function==="bet" && i<15){
+					let bet=0;
+					let win;
+					let betValue=parseInt(data.results[0].value,10)/(10**18)
 					if(data.results!=undefined){
-						allWinsFetch.push({sender:data.sender,value:(parseInt(data.results[0].value,10)/(10**18))});
-						i++;
+						data.results.map((result)=>{
+							if(result.callType==="2"){
+								win=Buffer.from(result.data,"base64").toString().split("@")[2]; 
+							}
+						});
+						
+
+						let winValue;
+						switch (win){
+							case '01':
+								winValue=0.05;
+								break;
+							case '02':
+								winValue=0.07;
+								break;
+							case '03':
+								winValue=0.1;
+								break;
+							case '04':
+								winValue=0.2;
+								break;
+							case '05':
+								winValue="Jackpot"
+								break;
+						
+						}
+
+
+						if(winValue!==null && winValue!==undefined){
+							if(winValue!=="Jackpot"){
+								winValue=winValue*(betValue/0.05)
+							}
+							allWinsFetch.push({sender:data.sender,value:winValue});
+							i++;
+						}
+
+
 					}
 					if(j<15){
-						allTransactionsFetch.push({hash:data.txHash,value:(parseInt(data.value,10)/(10**18))});
+						allTransactionsFetch.push({hash:data.txHash,value:betValue});
 						j++;
 					}
 				}
@@ -148,11 +186,11 @@ function Homepage() {
 				<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<div className="nav-res">
 						<ul className="nav navbar-nav m-auto menu-inner tog-nav">
-							<li><a href="#banner">Home</a></li>
-							<li><a href="#control">Membership</a></li>
+							<li><a href="#games">Games</a></li>
 							<li><a href="#start">How to play ?</a></li>
-							<li><a href="#jackpots">Statistics</a></li>
+							<li><a href="#control">Membership</a></li>
 							<li><a href="#faq">FAQ</a></li>
+							<li><a href="#jackpots">Statistics</a></li>
 							<li className="more-less"><i id="test" className="fa fa-align-right"></i>
 								<i className="fa fa-times"></i>
 							</li>
@@ -199,13 +237,13 @@ function Homepage() {
 				<div className="col-md-6 offset-md-6 banner-center">
 					<div className="banner_text">
 
-						<h1 className="title">Elrond Jackpot</h1>
+						<h1 className="title">Elrond Vegas Club</h1>
 						<h3>New Gambling Experience</h3>
-						<p>Elrond Jackpot is a new gambling experience built on Elrond Network. Play our slot machines and try to win the EGLD Jackpot !</p>
+						<p>Elrond Vegas Club is the 1st community casino built on Elrond Network. Play and try to multiply your $eGold on our new generation gambling games.</p>
 
-						<Link to="slotmachine">
+						<a href="#project-img">
 							<div className="casino-btn btn-4 yellow-btn">play now</div>
-						</Link>
+						</a>
 					</div>
 
 				</div>
@@ -266,171 +304,13 @@ function Homepage() {
 			</div>
 		</div>
 	</section>*/}
-	
-
-	{/* Control Start */}
-
-	<section id="control" className="control back-light section">
-		<div className="container">
-			<div className="row justify-content-center text-center">
-				<div className="col-lg-6">
-					<div className="heading">
-						<h2>555 lifetime membership cards</h2>
-						<img src={headingBorderEffect} className="img-fluid" alt="effect" />
-					</div>
-				</div>
-				<div className="row ">
-					<div className="col-lg-6 col-md-12">
-						<div className="row control-inner cont-bot">
-							<div className="col-lg-3 col-md-2 col-4">
-								<div className="control-img">
-									<i className="fa flaticon-bill"></i>
-								</div>
-							</div>
-							<div className="col-lg-9 col-md-10 col-8">
-								<div className="control-text">
-									<h3>Rewards</h3>
-									<p>5% of EGLD bets from all of our games go into the holders' wallets (weekly distribution)</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="col-lg-6 col-md-12">
-						<div className="row control-inner">
-							<div className="col-lg-3 col-md-2 col-4">
-								<div className="control-img">
-									<i className="fa flaticon-money"></i>
-								</div>
-							</div>
-							<div className="col-lg-9 col-md-10 col-8">
-								<div className="control-text">
-									<h3>Community</h3>
-									<p>Discord role that gives access to contests and advantages in the community (reserved channels, giveaway, contest)</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div className="row control-pad">
-					<div className="border-effect1">
-						<img src={borderEffect} className="img-fluid" alt="effect"/>
-					</div>
-					<div className="border-effect2">
-						<img src={borderEffect} className="img-fluid" alt="effect"/>
-					</div>
-				</div>
-
-				<div className="row">
-					<div className="col-lg-6 col-md-12">
-						<div className="row control-inner cont-bot">
-							<div className="col-lg-3 col-md-2 col-4">
-								<div className="control-img">
-									<i className="fa flaticon-loss"></i>
-								</div>
-							</div>
-							<div className="col-lg-9 col-md-10 col-8">
-								<div className="control-text">
-									<h3>Partnership</h3>
-									<p>Different benefits negotiated with other Elrond projects for holders (WL, free mint, airdrop)</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="col-lg-6 col-md-12">
-						<div className="row control-inner">
-							<div className="col-lg-3 col-md-2 col-4">
-								<div className="control-img">
-									<i className="fa flaticon-wallet-1"></i>
-								</div>
-							</div>
-							<div className="col-lg-9 col-md-10 col-8">
-								<div className="control-text">
-									<h3>Free Game</h3>
-									<p>Free spin draws every month for holders. To give you chances to win the Jackpot.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</section>
-	{/* Control End */}
-	{/* How to Start */}
-
-	<section id="start" className="how-start back-light section">
-		<div className="container">
-			<div className="row justify-content-center text-center">
-				<div className="col-lg-6">
-					<div className="heading">
-						<h2>How to Play ?</h2>
-						<img src={headingBorderEffect} className="img-fluid" alt="effect"/>
-					</div>
-				</div>
-				<div className="row ">
-					<div className="col-md-4">
-						<div className="row control-inner">
-							<div className="col-lg-3 col-md-12 col-3">
-								<div className="start-img">
-									<i className="fa flaticon-bill"></i>
-								</div>
-							</div>
-							<div className="col-lg-9 col-md-12 col-9">
-								<div className="start-text">
-									<h3>Choose your slot machine</h3>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="col-md-4">
-						<div className="row control-inner">
-							<div className="col-lg-3 col-md-12 col-3">
-								<div className="start-img">
-									<i className="fa flaticon-wallet"></i>
-								</div>
-							</div>
-							<div className="col-lg-9 col-md-12 col-9">
-								<div className="start-text">
-									<h3>Bet your $EGLD</h3>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<div className="col-md-4">
-						<div className="row control-inner">
-							<div className="col-lg-3 col-md-12 col-3">
-								<div className="start-img">
-									<i className="fa flaticon-casino"></i>
-								</div>
-                            </div>
-							<div className="col-lg-9 col-md-12 col-9">
-								<div className="start-text">
-									<h3>Try to win a prize or the Super Jackpot ! </h3>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div className="row ">
-					<p>For each bet, 10% goes into the jackpot which will be won randomly by a random player. 
-					<br/>The more players there are, the bigger the Jackpot will be.</p>
-				</div>
-
-			</div>
-		</div>
-	</section>
-	{/* How to Start */}
 
 	{/* Related other games Start */}
 
-	{/*<section id="project-img" className="project-img in-project back-light section">
+	<section id="project-img" className="project-img in-project back-light section">
 		<div className="container">
 
-			<div className="row justify-content-center text-center">
+			<div className="row justify-content-center text-center" id="games">
 				<div className="col-lg-6">
 					<div className="heading">
 						<h2>The games</h2>
@@ -438,7 +318,7 @@ function Homepage() {
 					</div>
 				</div>
 			</div>
-			 <div className="row justify-content-center text-center pro-row">
+			 {/*<div className="row justify-content-center text-center pro-row">
                 <div className="col-lg-9 m-auto col-12 text-center button-group">
                     <ul className="nav nav-pills" id="pills-tab" role="tablist">
                         <li className="nav-item">
@@ -468,7 +348,7 @@ function Homepage() {
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div>*/}
             
             <div className="row mx-0">
             <div className="col-lg-12 px-0">
@@ -476,371 +356,217 @@ function Homepage() {
                     <div className="tab-pane fade show active" id="pills-all" role="tabpanel"
                         aria-labelledby="pills-all-tab">
                         <div className="row mx-0">
-                           <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage1} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#" className="btn-4 yellow-btn">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Roulette</h3>
-											<p>Catagory: Roulette</p>
+                        	<div className="offset-md-2 col-md-4">
+								<div className="port_img">
+									<img src={relatedGameImage1} className="img-fluid" alt=""/>
+							
+									<div className="overlay1">
+										<div className="overlay-text">
+											<div className="port-text">
+												<div className="casino-btn">
+													<Link to="/wheelroom">play now</Link>
+												</div>
+												<div className="port-text-btm">
+													<h3>Roulette</h3>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-                           </div>
-                               <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage2} className="img-fluid" alt=""/>
+                        	</div>
+                        	<div className="col-md-4">
+                            	<div className="port_img">
+									<img src={relatedGameImage2} className="img-fluid" alt=""/>
 					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Roulette</h3>
-											<p>Catagory: Roulette</p>
+									<div className="overlay1">
+										<div className="overlay-text">
+											<div className="port-text">
+												<div className="casino-btn">
+													<Link to="/slotmachine">play now</Link>
+												</div>
+												<div className="port-text-btm">
+													<h3>Slot Machine</h3>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
                             </div>
-                                <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage3} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free slots</h3>
-											<p>Catagory: slots</p>
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
-                            </div>                            
-                        
-                        </div>
-                    </div>
-                    
-                    <div className="tab-pane fade" id="pills-illustrations" role="tabpanel"
-                        aria-labelledby="pills-illustrations-tab">
-                        <div className="row mx-0">
-                            <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage2} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#" className="btn-4 yellow-btn">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free slots</h3>
-											<p>Catagory: slots</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                           </div>
-                               <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage4} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free slots</h3>
-											<p>Catagory: slots</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                                <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage5} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free slots</h3>
-											<p>Catagory: slots</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>   
-                            
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="pills-logo" role="tabpanel" aria-labelledby="pills-logo-tab">
-                        <div className="row mx-0">
-                        <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage3} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#" className="btn-4 yellow-btn">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Roulette</h3>
-											<p>Catagory: Roulette</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                           </div>
-                               <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage6} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Roulette</h3>
-											<p>Catagory: Roulette</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                            <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage7} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Roulette</h3>
-											<p>Catagory: Roulette</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="pills-web-tem" role="tabpanel" aria-labelledby="pills-web-tem-tab">
-                       <div className="row mx-0">
-                        <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage1} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#" className="btn-4 yellow-btn">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Black Jack</h3>
-											<p>Catagory: Black Jack</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                           </div>
-                               <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage2} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Black Jack</h3>
-											<p>Catagory: Black Jack</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                            <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage6} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Black Jack</h3>
-											<p>Catagory: Black Jack</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div className="tab-pane fade" id="pills-busi-card" role="tabpanel"
-                        aria-labelledby="pills-busi-card-tab">
-                       <div className="row mx-0">
-                        <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage1} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#" className="btn-4 yellow-btn">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Poker</h3>
-											<p>Catagory: Poker</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                           </div>
-                               <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage4} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Poker</h3>
-											<p>Catagory: Poker</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                            <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage8} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Poker</h3>
-											<p>Catagory: Poker</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="pills-flyer" role="tabpanel" aria-labelledby="pills-flyer-tab">
-                      <div className="row mx-0">
-                        <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage4} className="img-fluid" alt=""/>
-						
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#" className="btn-4 yellow-btn">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Poker</h3>
-											<p>Catagory: Poker</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                           </div>
-                               <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage7} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Black Jack</h3>
-											<p>Catagory: Black Jack</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                            <div className="col-md-4">
-                            <div className="port_img">
-						<img src={relatedGameImage9} className="img-fluid" alt=""/>
-					
-							<div className="overlay1">
-								<div className="overlay-text">
-									<div className="port-text">
-										<div className="casino-btn">
-											<a href="#">play now</a></div>
-										<div className="port-text-btm">
-											<h3>Free Roulette</h3>
-											<p>Catagory: Roulette</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-			<div className="row justify-content-center text-center">
+			{/*<div className="row justify-content-center text-center">
 				<div className="col-md-12">
 					<div className="casino-btn start-btn">
 						<a href="games.html" className="btn-4 yellow-btn">Browse All</a></div>
 				</div>
-			</div>
+			</div>*/}
 
 		</div>
-</section>*/}
+	</section>
 	{/* Related other game End */}
+
+	{/* How to Start */}
+
+	<section id="start" className="how-start back-light section">
+		<div className="container">
+			<div className="row justify-content-center text-center">
+				<div className="col-lg-6">
+					<div className="heading">
+						<h2>How to Play ?</h2>
+						<img src={headingBorderEffect} className="img-fluid" alt="effect"/>
+					</div>
+				</div>
+				<div className="row ">
+					<div className="col-md-4">
+						<div className="row control-inner">
+							<div className="col-lg-3 col-md-12 col-3">
+								<div className="start-img">
+									<i className="fa flaticon-bill"></i>
+								</div>
+							</div>
+							<div className="col-lg-9 col-md-12 col-9">
+								<div className="start-text">
+									<h3>1. Connect your wallet and & choose your game</h3>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="col-md-4">
+						<div className="row control-inner">
+							<div className="col-lg-3 col-md-12 col-3">
+								<div className="start-img">
+									<i className="fa flaticon-wallet"></i>
+								</div>
+							</div>
+							<div className="col-lg-9 col-md-12 col-9">
+								<div className="start-text">
+									<h3>2. Choose your bet</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div className="col-md-4">
+						<div className="row control-inner">
+							<div className="col-lg-3 col-md-12 col-3">
+								<div className="start-img">
+									<i className="fa flaticon-casino"></i>
+								</div>
+                            </div>
+							<div className="col-lg-9 col-md-12 col-9">
+								<div className="start-text">
+									<h3>3. Start the game & wait for the result</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="row ">
+					<p Style="padding:15px">0% bet fees
+					<br/>40% of casino revenue for holders</p>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	{/* How to Start */}
+	
+
+	{/* Control Start */}
+
+	<section id="control" className="control back-light section">
+		<div className="container">
+			<div className="row justify-content-center text-center">
+				<div className="col-lg-6">
+					<div className="heading">
+						<h2>555 lifetime membership cards</h2>
+						<img src={headingBorderEffect} className="img-fluid" alt="effect" />
+					</div>
+				</div>
+				<div className="row ">
+					<div className="col-lg-6 col-md-12">
+						<div className="row control-inner cont-bot">
+							<div className="col-lg-3 col-md-2 col-4">
+								<div className="control-img">
+									<i className="fa flaticon-bill"></i>
+								</div>
+							</div>
+							<div className="col-lg-9 col-md-10 col-8">
+								<div className="control-text">
+									<h3>REWARDS</h3>
+									<p>40% of casino winnings + 30% of royalties go to our NFT holders, in EGLD every week. We manage the casino's income as an investment fund and we can offer investments to increase the rewards, which the holders will vote for</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="col-lg-6 col-md-12">
+						<div className="row control-inner">
+							<div className="col-lg-3 col-md-2 col-4">
+								<div className="control-img">
+									<i className="fa flaticon-money"></i>
+								</div>
+							</div>
+							<div className="col-lg-9 col-md-10 col-8">
+								<div className="control-text">
+									<h3>DAO</h3>
+									<p>For the 1st community casino on Elrond we opted for the DAO. This will be the first DAO for Elrond gambling. The decisions belong to the investors. Holders will be able to offer new games that we will develop and more. 1 NFT = 1 vote</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="row control-pad">
+					<div className="border-effect1">
+						<img src={borderEffect} className="img-fluid" alt="effect"/>
+					</div>
+					<div className="border-effect2">
+						<img src={borderEffect} className="img-fluid" alt="effect"/>
+					</div>
+				</div>
+
+				<div className="row">
+					<div className="col-lg-6 col-md-12">
+						<div className="row control-inner cont-bot">
+							<div className="col-lg-3 col-md-2 col-4">
+								<div className="control-img">
+									<i className="fa flaticon-loss"></i>
+								</div>
+							</div>
+							<div className="col-lg-9 col-md-10 col-8">
+								<div className="control-text">
+									<h3>COMMUNITY</h3>
+									<p>We believe in a strong community model. We are planning discord animations for holders with several prizes to be won. Discord roles giving access to several advantages will be available (giveaways, free games, advantages of our partners)</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="col-lg-6 col-md-12">
+						<div className="row control-inner">
+							<div className="col-lg-3 col-md-2 col-4">
+								<div className="control-img">
+									<i className="fa flaticon-wallet-1"></i>
+								</div>
+							</div>
+							<div className="col-lg-9 col-md-10 col-8">
+								<div className="control-text">
+									<h3>PARTNERSHIP</h3>
+									<p>Partnerships with Elrond projects only will be established to increase the volume of games. We plan to integrate our casino with different Elrond partners (ecosystems, websites, dapp, metaverse). Our technical skills allow us to implement the casino with our partners</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	{/* Control End */}
+
 
 	{/* Unlock free spin Start */}
 	<section id="free-spin" className="free-spin back-light section">
@@ -863,11 +589,11 @@ function Homepage() {
 				<div className="col-md-6">
 					<div className="spin-text">
 
-						<p>Elrond Jackpot is created by passionate developers who want to innovate on Elrond gambling. Discover the first slot machines with $EGLD jackpot built on Elrond Network. 
+						<p>Elrond Vegas Club is created by passionate developers from the Elrond community. Our ambition is to build the 1st community casino in EGLD. Our investors will receive rewards and will have real decision-making power over the evolution of the casino (partnerships, new games, rewards). We plan to implement the casino with partner projects who want to offer gambling experiences to their members. Our technical skills allow us to work on different supports (dapp, website, metaverse).
 						</p><br/>
-						<p>For each bet 20% goes into the jackpot which will be won by a random player.</p>
+						<p>Our strength is the technicality and the passion that we share for Elrond and web3 gambling. Let's develop together the Elrond community casino of tomorrow !</p>
 
-						<Link to="slotmachine">
+						<Link to="/slotmachine">
 							<div className="casino-btn">
 								play now
 							</div>
@@ -882,6 +608,88 @@ function Homepage() {
 
 	{/* Unlock free spin End */}
 	
+	
+	
+	{/* FAQ Start */}
+	<section id="faq" className="faq back-light section">
+		<div className="container">
+
+			<div className="row justify-content-center text-center">
+				<div className="col-lg-6">
+					<div className="heading">
+						<h2>Frequently Ask Questions</h2>
+						<img src={headingBorderEffect} className="img-fluid" alt="effect"/>
+					</div>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-lg-12 col-md-12">
+					<div className="row">
+						<div className="col-md-6">
+							<div className="faq-inner">
+								<h3>01. What are the rewards of the holders ?</h3>
+								<p>40% of all revenue generated by the casino + 30% of secondary market royalties are for the card holders.</p>
+							</div>
+						</div>
+						<div className="col-md-6">
+							<div className="faq-inner f-padding">
+								<h3>02. What is casino revenue ?</h3>
+								<p>Casino revenue is not calculated on all bets but only on losing bets and the value we create with partnerships.</p>
+							</div>
+						</div>
+					</div>
+					<div className="row faq-border">
+						<img src={faqBorder} className="img-fluid" alt="effect"/>
+					</div>
+					<div className="row faq-pad justify-content-center text-center">
+        			<img src={faqBorder2} className="img-fluid" alt="effect"/>
+
+					</div>
+
+					<div className="row">
+						<div className="col-md-6">
+							<div className="faq-inner">
+								<h3>03. How many NFT's available ?</h3>
+								<p>Only 555 membership cards are available for 1 EGLD each. This is your lifetime membership card as a casino investor.</p>
+							</div>
+						</div>
+						<div className="col-md-6">
+							<div className="faq-inner f-padding">
+								<h3>04. How much betting commission ?</h3>
+								<p>The casino takes 0% on bets and it is wanted. So you can play for free 1 egld committed = 1 egld bet.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{/*<div className="col-lg-3 col-md-12">
+					<div className="faq-form">
+
+						<form>
+
+							<div className="form-group col-sm-12">
+								<input type="text" className="form-control" name="name" placeholder="Enter Your Name"/>
+							</div>
+							<div className="form-group col-sm-12">
+								<input type="text" className="form-control" name="email" placeholder="Enter Your Email"/>
+							</div>
+							<div className="form-group col-sm-12">
+
+								<textarea name="meassage" placeholder="Enter Comments"></textarea>
+
+							</div>
+							<div className="casino-btn col-sm-12">
+								<a href="#" className="btn-4 yellow-btn faq-btn">send</a></div>
+						</form>
+
+					</div>
+
+				</div>*/}
+			</div>
+		</div>
+	</section>
+	{/* FAQ End */}
+
 	{/* Casino Jackpots Start */}
 	<section id="jackpots" className="jackpots back-dark section">
 		<div className="container">
@@ -954,86 +762,6 @@ function Homepage() {
 		</div>
 	</section>
 	{/* Casino Jackpots End */}
-	
-	{/* FAQ Start */}
-	<section id="faq" className="faq back-light section">
-		<div className="container">
-
-			<div className="row justify-content-center text-center">
-				<div className="col-lg-6">
-					<div className="heading">
-						<h2>Frequently Ask Questions</h2>
-						<img src={headingBorderEffect} className="img-fluid" alt="effect"/>
-					</div>
-				</div>
-			</div>
-			<div className="row">
-				<div className="col-lg-12 col-md-12">
-					<div className="row">
-						<div className="col-md-6">
-							<div className="faq-inner">
-								<h3>01. How much NFT do you plan to sell, at what price ?</h3>
-								<p>There will be exactly 555 NFT mintable at 1 EGLD.</p>
-							</div>
-						</div>
-						<div className="col-md-6">
-							<div className="faq-inner f-padding">
-								<h3>02. There are any utilities behind the NFTs ?</h3>
-								<p>Sure, the NFT owners will receive 50% from the casino's income every week.</p>
-							</div>
-						</div>
-					</div>
-					<div className="row faq-border">
-						<img src={faqBorder} className="img-fluid" alt="effect"/>
-					</div>
-					<div className="row faq-pad justify-content-center text-center">
-        			<img src={faqBorder2} className="img-fluid" alt="effect"/>
-
-					</div>
-
-					<div className="row">
-						<div className="col-md-6">
-							<div className="faq-inner">
-								<h3>03. Do you plan to enhance this online Elrond casino ?</h3>
-								<p>Yes, we plan to add game quite frequently. We count on the community to share their wish for the next games. It could be slot machine, roulette, poket, etc. Everything that can be fun.</p>
-							</div>
-						</div>
-						<div className="col-md-6">
-							<div className="faq-inner f-padding">
-								<h3>04. Can I join us on social media ?</h3>
-								<p>You can join our Discord. There, you will be able to share with the community, relax, having fun and co-build the future of this casino.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				{/*<div className="col-lg-3 col-md-12">
-					<div className="faq-form">
-
-						<form>
-
-							<div className="form-group col-sm-12">
-								<input type="text" className="form-control" name="name" placeholder="Enter Your Name"/>
-							</div>
-							<div className="form-group col-sm-12">
-								<input type="text" className="form-control" name="email" placeholder="Enter Your Email"/>
-							</div>
-							<div className="form-group col-sm-12">
-
-								<textarea name="meassage" placeholder="Enter Comments"></textarea>
-
-							</div>
-							<div className="casino-btn col-sm-12">
-								<a href="#" className="btn-4 yellow-btn faq-btn">send</a></div>
-						</form>
-
-					</div>
-
-				</div>*/}
-			</div>
-		</div>
-	</section>
-	{/* FAQ End */}
 	
 	
 	{/* Casino Contact start */}

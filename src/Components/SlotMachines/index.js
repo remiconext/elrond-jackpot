@@ -101,8 +101,6 @@ function SlotGame(){
             setSessionId(sessionId);
             //startSpin();
         }
-        
-    
 
     }
 
@@ -114,7 +112,22 @@ function SlotGame(){
 
     let valueJackpot=0;    
     useEffect(async () => {
-        valueJackpot = await getJackpot();
+        let abiRegistry = AbiRegistry.create(abiFile);
+        let abi = new SmartContractAbi(abiRegistry, ["Slotmachine"]);
+
+        let contract = new SmartContract({ address: new Address(contractAddressSlotMachineCaller), abi: abi });
+        const proxy = new ProxyNetworkProvider(network.apiAddress);
+
+        const queryCurrentJackpot= new Query({
+          address: new Address(contractAddressSlotMachine),
+          func: new ContractFunction('jackpot'),
+          args: []
+        });
+        
+        let queryResponse=await proxy.queryContract(queryCurrentJackpot)
+        let endpointDefinition = contract.getEndpoint("jackpot");
+        let { firstValue }  = new ResultsParser().parseQueryResponse(queryResponse, endpointDefinition);
+        valueJackpot=parseInt(firstValue.value,10)/(10**18);
         var resumeAudioContext = function() {
             // handler for fixing suspended audio context in Chrome
             try {
@@ -2406,6 +2419,7 @@ function SlotGame(){
     * 
     */
     function checkMobileOrientation() {
+        window.alert('ok');
         var o = window.orientation;
         var isLandscape=false;
         
@@ -2622,8 +2636,8 @@ function SlotGame(){
     var enablePercentage = false; //option to have result base on percentage
     var overallPercent = 200;
     var paytable_arr = [
-                        {index:[0,0,0], pay:0.50, percent:0, isJackpot:false},
-                        {index:[1,1,1], pay:0.70, percent:0, isJackpot:false},
+                        {index:[0,0,0], pay:0.05, percent:0, isJackpot:false},
+                        {index:[1,1,1], pay:0.07, percent:0, isJackpot:false},
                         {index:[2,2,2], pay:0.10, percent:0, isJackpot:false},
                         {index:[3,3,3], pay:0.20, percent:0, isJackpot:false},
                         {index:[4,4,4], pay:0, percent:0, isJackpot:true},
@@ -2771,6 +2785,25 @@ function SlotGame(){
                 cancelable: true,
                 composed: false,
             });
+           let interval = setInterval(function(){
+                axios.get(getResult(network.apiAddress,transactionStatus.transactions[0].hash))
+                .then(function(response){
+                    let data="";
+/*                     window.alert(JSON.stringify(response.data));
+                    window.alert(JSON.stringify(response.data.results)); */
+                    if(response.data.results!=undefined){
+                        response.data.results.map((result)=>{
+                            if(result.callType==2){
+                                data=result.data;
+                                clearInterval(interval);
+                                triggerSpinSlotAnimation(data);
+                                
+                            }
+                        });
+                    }
+
+                })
+            },3000)
             let mainElementHolder= document.getElementById("mainHolder");
             mainElementHolder.dispatchEvent(triggerEvent);
             //startSpin();
@@ -2778,15 +2811,15 @@ function SlotGame(){
         }
     },[signedTransactions]);
 
-    const triggerSpinSlotAnimation = () => {
-        axios.get(getResult(network.apiAddress,transactionStatus.transactions[0].hash))
-        .then(function(response){
-            let data="";
+    const triggerSpinSlotAnimation = (data) => {
+        // axios.get(getResult(network.apiAddress,transactionStatus.transactions[0].hash))
+        // .then(function(response){
+/*             let data="";
             response.data.results.map((result)=>{
                 if(result.callType==2){
                     data=result.data;
                 }
-            });
+            }); */
             let possibleValues=[1,2,3,4];
             let values=[];
             for (let nb1 in possibleValues){
@@ -2831,31 +2864,13 @@ function SlotGame(){
             });
             let mainElementHolder= document.getElementById("mainHolder");
             mainElementHolder.dispatchEvent(triggerEvent);
-        })
+        // })
     }
 
-    const getJackpot=async ()=>{
-        let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, ["Slotmachine"]);
-
-        let contract = new SmartContract({ address: new Address(contractAddressSlotMachineCaller), abi: abi });
-        const proxy = new ProxyNetworkProvider(network.apiAddress);
-
-        const queryCurrentJackpot= new Query({
-          address: new Address(contractAddressSlotMachine),
-          func: new ContractFunction('jackpot'),
-          args: []
-        });
-        
-        let queryResponse=await proxy.queryContract(queryCurrentJackpot)
-        let endpointDefinition = contract.getEndpoint("jackpot");
-        let { firstValue }  = new ResultsParser().parseQueryResponse(queryResponse, endpointDefinition);
-        return(parseInt(firstValue.value,10)/(10**18));
-    }
+   
 
     const transactionStatus = transactionServices.useTrackTransactionStatus({
         transactionId: sessionId ?? null,
-        onSuccess:triggerSpinSlotAnimation,
     });
     
 

@@ -6,7 +6,9 @@ import {
   Route,
 } from "react-router-dom";
 import Slotmachine from './Pages/Slotmachine';
+import NewSlotmachine from './Pages/NewSlotmachine';
 import Homepage from './Pages/Homepage';
+import WheelRoom from './Pages/WheelRoom';
 import { DappProvider,DappUI } from "@elrondnetwork/dapp-core";
 
 function App() {
@@ -19,7 +21,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Homepage/>}/>
           <Route path="/unlock" element={<Homepage/>}/>
-          <Route path="slotmachine" element={<Slotmachine />}/>
+          <Route path="slotmachine" element={<NewSlotmachine />}/>
+          <Route path="wheelroom" element={<WheelRoom />}/>
         </Routes>
       </Router>
     </DappProvider>

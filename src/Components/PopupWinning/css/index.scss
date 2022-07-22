@@ -1,0 +1,35 @@
+.winning-popup{
+    position: fixed;
+    background-color: white;
+    border-radius: 30px;
+    z-index: 500;
+    color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 3px 3px 3px #1f1b3dca;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding:30px;
+    border: 2px solid #FFC738;
+    h2{
+        font-size:40px;
+        color:black;
+    }
+    .button-win{
+        background-color: #FFC738;
+        border-radius: 30px;
+        padding: 5px 15px;
+        cursor: pointer;
+    }
+}
+.winning-popup-bg{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 499;
+    background-color: #0000009f;
+}

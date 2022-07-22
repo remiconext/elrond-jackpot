@@ -1,0 +1,486 @@
+/*betting table*/
+#betting_board{
+	width: 100%;
+	border: 1px solid;
+	color: white;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%) scale(80%);
+}
+
+
+.bbtoptwo{
+	position:relative;
+    cursor:pointer;
+	width: 50%;
+	border: 1px solid;
+	display: inline-block;
+	padding: 12px 4px;
+	text-align: center;
+	font-size:20px;
+	font-weight: bold;
+}
+
+.number_block{
+	position:relative;
+	width: calc(100%/12);
+    border: 1px solid;
+    text-align: center;
+    display: inline-block;
+    padding: 32px 0px;
+}
+
+.nbn{
+    cursor:pointer;
+    text-align:center;
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.bo3_board, .oto_board{
+	width:100%;
+}
+
+.bo3_block, .oto_block{
+	border: 1px solid;
+	display: inline-block;
+	padding: 8px 5px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+    cursor:pointer;
+	position:relative;
+}
+
+.bo3_block{
+    width: calc(100%/3);
+}
+
+.oto_block{
+	width: calc(100%/4);
+}
+
+.number_0{
+    cursor:pointer;
+	position: absolute;
+	border: 2px solid;
+	margin-left: -59px;
+	padding: 127px 20px;
+	border-bottom-left-radius: 100%;
+	border-top-left-radius: 100%;
+}
+
+.tt1_block{
+    border: 2px solid;
+    width: 10%;
+    position: absolute;
+    right:-10%;
+    padding: 32px 0px;
+    margin-top: -96.75px;
+}
+
+.winning_lines{
+	position: relative;
+	width: 100%;
+	height: 0;
+	z-index: 498;
+}
+
+.wlttb{
+    position: absolute;
+    width: 100%;
+    height: 10px;
+}
+
+#wlttb_1{
+    margin-top: 148px;
+}
+
+#wlttb_2{
+    margin-top: 243px;
+}
+
+#wlttb_3{
+    margin-top: 340px;
+}
+
+.wlrtl{
+	position: absolute;
+    display: inline-block;
+    width: 10px;
+    height: 288px;
+    top: 58px;
+}
+
+
+
+#wlrtl_1{
+	left: calc(100%/12*0);
+    transform: translate(-50%);
+}
+#wlrtl_2{
+	left: calc(100%/12*1);
+    transform: translate(-50%);
+}
+#wlrtl_3{
+	left: calc(100%/12*2);
+    transform: translate(-50%);
+}
+#wlrtl_4{
+	left: calc(100%/12*3);
+    transform: translate(-50%);
+}
+#wlrtl_5{
+	left: calc(100%/12*4);
+    transform: translate(-50%);
+}
+#wlrtl_6{
+	left: calc(100%/12*5);
+    transform: translate(-50%);
+}
+#wlrtl_7{
+	left: calc(100%/12*6);
+    transform: translate(-50%);
+}
+#wlrtl_8{
+	left: calc(100%/12*7);
+    transform: translate(-50%);
+}
+#wlrtl_9{
+	left: calc(100%/12*8);
+    transform: translate(-50%);
+}
+#wlrtl_10{
+	left: calc(100%/12*9);
+    transform: translate(-50%);
+}
+#wlrtl_11{
+	left: calc(100%/12*10);
+    transform: translate(-50%);
+}
+#wlrtl_12{
+	left: calc(100%/12*11);
+    transform: translate(-50%);
+}
+
+
+.wlcb{
+	position: absolute;
+	width: 477px;
+	height: 41px;
+	top: 255px;
+	margin-left: 13px;
+}
+
+#wlcb_2{
+	top: 343px;
+}
+
+.cbbb{
+    width: 20px;
+    height: 20px;
+    position: relative;
+	display: inline-block;
+	margin-left:22px;
+	margin-top: 9.5px;
+	cursor: pointer;
+}
+
+#cbbb_1, #cbbb_4, #cbbb_5, #cbbb_7, #cbbb_9, #cbbb_11, #cbbb_12, #cbbb_15, #cbbb_16, #cbbb_18, #cbbb_20, #cbbb_22{
+	margin-left: 21px;
+}
+
+#cbbb_3, #cbbb_14{
+	margin-left: 20.5px;
+}
+
+#cbbb_6, #cbbb_17{
+	margin-left: 23px;
+}
+
+#cbbb_8, #cbbb_10, #cbbb_19, #cbbb_21{
+	margin-left: 22px;
+}
+
+.ttbbetblock_1,.ttbbetblock_2,.ttbbetblock_3,.ttbbetblock_4,.ttbbetblock_5,.ttbbetblock_6,.ttbbetblock_7,.ttbbetblock_8,.ttbbetblock_9,.ttbbetblock_10,.ttbbetblock_11,.ttbbetblock_12{
+	width: 19.1px;
+	height: 10px;
+	position: absolute;
+	top: -2px;
+	cursor:pointer;
+	z-index:3;
+}
+
+.ttbbetblock_1{
+    left:calc(100%/12*0);
+    transform:translateX(-50%);
+}
+
+.ttbbetblock_2{
+    left:calc(100%/12*1);
+    transform:translateX(-50%);
+}
+.ttbbetblock_3{
+    left:calc(100%/12*2);
+    transform:translateX(-50%);
+}
+.ttbbetblock_4{
+    left:calc(100%/12*3);
+    transform:translateX(-50%);
+}
+.ttbbetblock_5{
+    left:calc(100%/12*4);
+    transform:translateX(-50%);
+}
+.ttbbetblock_6{
+    left:calc(100%/12*5);
+    transform:translateX(-50%);
+}
+.ttbbetblock_7{
+    left:calc(100%/12*6);
+    transform:translateX(-50%);
+}
+.ttbbetblock_8{
+    left:calc(100%/12*7);
+    transform:translateX(-50%);
+}
+.ttbbetblock_9{
+    left:calc(100%/12*8);
+    transform:translateX(-50%);
+}
+.ttbbetblock_10{
+    left:calc(100%/12*9);
+    transform:translateX(-50%);
+}
+.ttbbetblock_11{
+    left:calc(100%/12*10);
+    transform:translateX(-50%);
+}
+.ttbbetblock_12{
+    left:calc(100%/12*11);
+    transform:translateX(-50%);
+}
+
+.ttbbetline_1,.ttbbetline_2,.ttbbetline_3,.ttbbetline_4,.ttbbetline_5,.ttbbetline_6,.ttbbetline_7,.ttbbetline_8,.ttbbetline_9,.ttbbetline_10,.ttbbetline_11,.ttbbetline_12{
+    width: 19.1px;
+    height: 10px;
+    position: absolute;
+    top: -2px;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.ttbbetline_1{
+    left: calc(100%/12*0);
+    transform: translateX(50%);
+}
+
+.ttbbetline_2{
+    left: calc(100%/12*1);
+    transform: translateX(50%);
+}
+.ttbbetline_3{
+    left: calc(100%/12*2);
+    transform: translateX(50%);
+}
+.ttbbetline_4{
+    left: calc(100%/12*3);
+    transform: translateX(50%);
+}
+.ttbbetline_5{
+    left: calc(100%/12*4);
+    transform: translateX(50%);
+}
+.ttbbetline_6{
+    left: calc(100%/12*5);
+    transform: translateX(50%);
+}
+.ttbbetline_7{
+    left: calc(100%/12*6);
+    transform: translateX(50%);
+}
+.ttbbetline_8{
+    left: calc(100%/12*7);
+    transform: translateX(50%);
+}
+.ttbbetline_9{
+    left: calc(100%/12*8);
+    transform: translateX(50%);
+}
+.ttbbetline_10{
+    left: calc(100%/12*9);
+    transform: translateX(50%);
+}
+.ttbbetline_11{
+    left: calc(100%/12*10);
+    transform: translateX(50%);
+}
+.ttbbetline_12{
+    left: calc(100%/12*11);
+    transform: translateX(50%);
+}
+
+
+.rtlbb1, .rtlbb2, .rtlbb3{
+	height: 45px;
+	width: 10px;
+    transform: translateY(50%);
+    position: absolute;
+    cursor:pointer;
+
+}
+
+.rtlbb1{
+    top: calc(100%/3*0);
+}
+
+.rtlbb2{
+    top: calc(100%/3*1);
+}
+
+.rtlbb3{
+    top: calc(100%/3*2);
+}
+
+.spinBtn{
+	position: absolute;
+	margin-top: 329px;
+	margin-left: -392px;
+	font-size: 15px;
+	cursor: pointer;
+	background-color: #ffec00;
+	padding: 10px 5px;
+	border-radius: 100%;
+	color: #000;
+	font-weight: bold;
+}
+
+.redNum{
+	background-color: #E0080B;
+}
+
+.blackNum{
+	background-color: #000;
+}
+
+.chipDeck, .bankContainer{
+	position: absolute;
+	margin-left: -383px;
+	margin-top: -74px;
+	width: 310px;
+	height:39px;
+	padding: 3px 0;
+	border: 1px solid;
+	border-radius: 10px;
+	box-shadow: inset -2px -4px rgb(0 0 0 / 20%);
+}
+
+.bankContainer{
+	margin-top: -21px;
+}
+
+
+.cdChipSpan{
+	display: inherit;
+	position: relative;
+	top: 5px;
+	width: 26px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+}
+
+.bank, .bet{
+	display: inline-block;
+	width: calc(50% - 28px);
+    background-color: #000;
+    font-size: 18px;
+    margin-left: 7px;
+    padding: 5px;
+    border: 4px solid silver;
+    border-radius: 7px;
+    text-align: right;
+}
+
+.pnBlock{
+	position: absolute;
+	border: 1px solid;
+	width: 500px;
+	height: 45px;
+	margin-top: 10px;
+	margin-left: -1px;
+}
+
+#pnContent{
+	border: 4px solid #d5b714;
+	width: 485px;
+	height: 31px;
+	position: relative;
+	display: block;
+	margin-left: 4px;
+	margin-top: 3px;
+	background-color: #fff;
+	color: #000;
+	overflow:hidden;
+}
+
+.pnRed, .pnBlack, .pnGreen{
+	position: relative;
+	display: inline;
+	padding:10px;
+	font-size: 19px;
+	top: 5px;
+}.pnRed{
+	color: red;
+}.pnBlack{
+	color: black;
+}.pnGreen{
+	color: green;
+}
+/*betting table end*/
+@media (max-width:992px){
+	#betting_board{
+		position:relative;
+		left:50%;
+		-ms-transform: translateX(-50%) scale(0.8,0.8);
+		-webkit-transform: translateX(-50%) scale(0.8,0.8);
+		-moz-transform: translateX(-50%) scale(0.8,0.8);
+		-o-transform: translateX(-50%) scale(0.8,0.8);
+		transform:translateX(-50%) scale(0.8,0.8);
+	}
+  }
+
+@media (max-width:643px){
+	#betting_board{
+		position:relative;
+		left:50%;
+		transform:translateX(-50%) scale(0.8,0.8);
+	}
+}
+
+@media (max-width:520px){
+	#betting_board{
+		position:relative;
+		left:50%;
+		transform:translateX(-50%) scale(0.7,0.7);
+	}
+}
+
+@media (max-width:460px){
+	#betting_board{
+		position:relative;
+		left:50%;
+		transform:translateX(-50%) scale(0.7,0.7);
+		-ms-transform: translateX(-50%) scale(0.7,0.7);
+		-webkit-transform: translateX(-50%) scale(0.7,0.7);
+		-moz-transform: translateX(-50%) scale(0.7,0.7);
+		-o-transform: translateX(-50%) scale(0.7,0.7);
+	}
+}
